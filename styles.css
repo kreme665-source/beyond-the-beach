@@ -312,11 +312,14 @@ button { font: inherit; color: inherit; }
   border: 1px solid var(--line-soft); background: var(--surface);
 }
 .pool-list {
-  font-family: var(--font-display); font-size: clamp(19px, 2.8vw, 27px);
-  line-height: 1.8; margin: 0 0 14px; color: var(--text);
+  /* flex so the browser can wrap between names — they are joined by dots
+     with no spaces, which the text layout treats as one unbreakable run. */
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline;
+  font-family: var(--font-display); font-size: clamp(18px, 4.6vw, 27px);
+  line-height: 1.7; margin: 0 0 14px; color: var(--text);
 }
 .pool-list .pool-name { white-space: nowrap; }
-.pool-list .dot { color: var(--accent); padding: 0 10px; }
+.pool-list .dot { color: var(--accent); padding: 0 clamp(7px, 2vw, 10px); }
 .pool-note { margin: 0; color: var(--muted); font-size: 13.5px; letter-spacing: .04em; }
 
 /* ------------------------------- 8. QUIZ -------------------------------- */
