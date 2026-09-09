@@ -70,8 +70,8 @@ const CARD_IMAGES = {
  *                 (your code, i.e. the xxx in xxx.goatcounter.com)
  */
 const ANALYTICS = {
-  provider: 'none',   // 'plausible' | 'goatcounter' | 'none'
-  site: ''
+  provider: 'goatcounter',   // 'plausible' | 'goatcounter' | 'none'
+  site: 'islandiq'           // dashboard: https://islandiq.goatcounter.com
 };
 
 /**
@@ -84,7 +84,7 @@ const ANALYTICS = {
  * Set show: false to hide the whole section until the video is ready.
  */
 const VIDEO = {
-  show: true,
+  show: false,           // hidden for launch — set true once the founder film exists
   type: 'none',          // 'youtube' | 'vimeo' | 'mp4' | 'none'
   id: '',
   src: '',
