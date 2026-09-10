@@ -796,3 +796,26 @@ button { font: inherit; color: inherit; }
   .reveal { opacity: 1; transform: none; }
   .hero-media { animation: none; }
 }
+
+/* ---------------------------------------------------------------------------
+   20. FULL REPORT CTA
+   The report is free. The button exists so the tap itself measures appetite
+   for depth — see build-status notes on report_unlocked.
+--------------------------------------------------------------------------- */
+.report-cta {
+  margin: clamp(30px, 4.5vw, 48px) auto 0;
+  max-width: 520px;
+  text-align: center;
+}
+.report-cta-note {
+  margin: 12px 0 0;
+  font-size: .82rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.capture-sub {
+  margin: 10px 0 18px;
+  font-size: .85rem;
+  line-height: 1.6;
+  color: var(--muted);
+}

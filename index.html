@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 <script>
   // Theme: system preference by default, user choice persisted. Set before paint to avoid flash.
   (function () {
@@ -149,17 +149,9 @@
 
       <div class="cards" id="matchCards"></div>
 
-      <div class="capture" id="capture">
-        <div class="capture-inner">
-          <p class="eyebrow">Stay with it</p>
-          <h3 class="capture-title">Unlock your full vibe report — every destination ranked for you, and the new ones as they land.</h3>
-          <form class="capture-form" id="captureForm" novalidate>
-            <label class="sr-only" for="email">Email address</label>
-            <input class="capture-input" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
-            <button class="btn btn-primary" type="submit" id="captureBtn">Send it</button>
-          </form>
-          <p class="capture-msg" id="captureMsg" role="status"></p>
-        </div>
+      <div class="report-cta" id="reportCta">
+        <button class="btn btn-primary" type="button" id="reportBtn">See my full report</button>
+        <p class="report-cta-note">All ten dimensions, and every destination in the pool ranked for you. No email needed.</p>
       </div>
 
       <section class="report" id="report" hidden aria-live="polite">
@@ -180,6 +172,20 @@
 
         <p class="report-note" id="reportNote"></p>
       </section>
+
+      <div class="capture" id="capture">
+        <div class="capture-inner">
+          <p class="eyebrow">One more thing</p>
+          <h3 class="capture-title">When destination seven lands, want to know?</h3>
+          <p class="capture-sub">That is the only thing your email is for. No weekly newsletter you did not ask for.</p>
+          <form class="capture-form" id="captureForm" novalidate>
+            <label class="sr-only" for="email">Email address</label>
+            <input class="capture-input" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
+            <button class="btn btn-primary" type="submit" id="captureBtn">Send it</button>
+          </form>
+          <p class="capture-msg" id="captureMsg" role="status"></p>
+        </div>
+      </div>
 
       <div class="share-card" id="shareCardBlock" hidden>
         <p class="eyebrow center">Share your vibe</p>
@@ -287,6 +293,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="script.js?v=5"></script>
+<script src="script.js?v=6"></script>
 </body>
 </html>

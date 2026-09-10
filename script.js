@@ -801,6 +801,10 @@ function prefersReducedMotion() {
 }
 
 function renderResults(result) {
+  // Reset the report gate so a retake starts closed again.
+  const rpt = $('#report'); if (rpt) rpt.hidden = true;
+  const rcta = $('#reportCta'); if (rcta) rcta.hidden = false;
+
   $('#personaName').textContent = result.persona.name;
   $('#personaDesc').textContent = result.persona.desc;
 
@@ -1097,8 +1101,11 @@ function renderReport() {
   });
 
   $('#reportNote').textContent =
-    `Six destinations scored against your profile today. When a seventh joins the pool, ` +
-    `you will hear from me — that is the only thing your email is for.`;
+    `Six destinations scored against your profile today. More are being added — ` +
+    `the pool is small on purpose while the matching is being tested.`;
+
+  const cta = $('#reportCta');
+  if (cta) cta.hidden = true;
 
   const el = $('#report');
   el.hidden = false;
@@ -1366,12 +1373,17 @@ function initCapture() {
 
     form.hidden = true;
     msg.textContent = ok
-      ? 'You are in. Your full report is below.'
-      : 'Saved — we could not reach the server just now, so it will send itself next time you visit. Your report is below either way.';
-    renderReport();
+      ? 'You are on the list. You will hear from me when destination seven lands.'
+      : 'Saved — we could not reach the server just now, so it will send itself next time you visit. You are on the list either way.';
     btn.disabled = false;
     btn.textContent = 'Send it';
   });
+}
+
+function initReportButton() {
+  const btn = $('#reportBtn');
+  if (!btn) return;
+  btn.addEventListener('click', () => { renderReport(); });
 }
 
 function initShare() {
@@ -1430,6 +1442,7 @@ function init() {
   initReveal();
   initPoolList();
   initCapture();
+  initReportButton();
   initShare();
 
   initShareCardButtons();
