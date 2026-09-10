@@ -255,6 +255,20 @@ const DIM_PHRASE = {
   calm: 'quiet that actually restores you'
 };
 
+/** Plain-language meaning of each dimension, for the full report. */
+const DIM_MEANING = {
+  food: 'How much a place\u2019s cooking decides whether the trip worked.',
+  nightlife: 'How much you want somewhere to still be going at midnight.',
+  culture: 'How much you want the history, the language, the why of a place.',
+  nature: 'How much the landscape itself has to carry the trip.',
+  adventure: 'How much you want a day to cost you something physical.',
+  luxury: 'How much you want the logistics handled and the comfort high.',
+  romance: 'How much the trip is built around two people rather than one.',
+  social: 'How much you want to end up in other people\u2019s evenings.',
+  iconic: 'How much you want to stand in front of the thing everyone knows.',
+  calm: 'How much you need the volume turned down to call it a rest.'
+};
+
 /** Tie-break priority when two dimensions score equal (earlier wins). */
 const DIM_PRIORITY = ['food', 'nightlife', 'culture', 'adventure', 'nature', 'iconic', 'luxury', 'social', 'romance', 'calm'];
 
@@ -1010,6 +1024,58 @@ function fadeAmbient(target, done) {
   }, AUDIO.fadeMs / steps);
 }
 
+/* --------------------- FULL VIBE REPORT (revealed on signup) ------------ */
+/* Delivered on the page, immediately. Nothing is promised by email that the
+   site cannot send. */
+
+function renderReport() {
+  if (!state.result) return;
+
+  // The results screen shows the top four; the report shows the whole pool.
+  const full = matchDestinations(state.answers, DESTINATIONS.length);
+  const persona = full.persona;
+
+  $('#reportPersona').textContent = persona.name;
+  $('#reportLead').textContent = persona.desc;
+
+  const dims = $('#reportDims');
+  dims.innerHTML = '';
+  rankDimensions(full.vector).forEach((d) => {
+    const pct = Math.round((full.vector[d] / 5) * 100);
+    const li = document.createElement('li');
+    li.innerHTML =
+      `<span class="rd-name">${DIM_LABEL[d]}</span>` +
+      `<span class="rd-track"><span class="rd-fill" style="width:${pct}%"></span></span>` +
+      `<span class="rd-val">${full.vector[d].toFixed(1)} / 5</span>` +
+      `<span class="rd-meaning">${DIM_MEANING[d]}</span>`;
+    dims.appendChild(li);
+  });
+
+  const ranks = $('#reportRanks');
+  ranks.innerHTML = '';
+  full.matches.forEach((m, i) => {
+    const li = document.createElement('li');
+    li.innerHTML =
+      `<span class="rr-num">${String(i + 1).padStart(2, '0')}</span>` +
+      `<span class="rr-name">${m.dest.name}</span>` +
+      `<span class="rr-score">${m.score}% match</span>` +
+      `<span class="rr-country">${m.dest.country}</span>` +
+      `<span class="rr-why">${m.why}</span>`;
+    ranks.appendChild(li);
+  });
+
+  $('#reportNote').textContent =
+    `Six destinations scored against your profile today. When a seventh joins the pool, ` +
+    `you will hear from me — that is the only thing your email is for.`;
+
+  const el = $('#report');
+  el.hidden = false;
+  track('report_unlocked', { persona: persona.name });
+  requestAnimationFrame(() => {
+    el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+  });
+}
+
 /* ------------------- 6. LEAD CAPTURE + SHARE ---------------------------- */
 
 function readSignups() {
@@ -1098,8 +1164,9 @@ function initCapture() {
 
     form.hidden = true;
     msg.textContent = ok
-      ? 'You are in. Your full vibe report is on its way.'
-      : 'Saved. We could not reach the server just now — it will send itself next time you visit.';
+      ? 'You are in. Your full report is below.'
+      : 'Saved — we could not reach the server just now, so it will send itself next time you visit. Your report is below either way.';
+    renderReport();
     btn.disabled = false;
     btn.textContent = 'Send it';
   });

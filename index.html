@@ -151,7 +151,7 @@
       <div class="capture" id="capture">
         <div class="capture-inner">
           <p class="eyebrow">Stay with it</p>
-          <h3 class="capture-title">Get your full vibe report + new destinations as we add them.</h3>
+          <h3 class="capture-title">Unlock your full vibe report — every destination ranked for you, and the new ones as they land.</h3>
           <form class="capture-form" id="captureForm" novalidate>
             <label class="sr-only" for="email">Email address</label>
             <input class="capture-input" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required>
@@ -160,6 +160,25 @@
           <p class="capture-msg" id="captureMsg" role="status"></p>
         </div>
       </div>
+
+      <section class="report" id="report" hidden aria-live="polite">
+        <p class="eyebrow center">Your full vibe report</p>
+        <h3 class="section-title center small" id="reportPersona">—</h3>
+        <div class="divider center" aria-hidden="true"><span></span><i></i><span></span></div>
+        <p class="report-lead" id="reportLead"></p>
+
+        <div class="report-block">
+          <p class="eyebrow">Your profile, all ten dimensions</p>
+          <ul class="report-dims" id="reportDims"></ul>
+        </div>
+
+        <div class="report-block">
+          <p class="eyebrow">Every destination in the pool, ranked for you</p>
+          <ol class="report-ranks" id="reportRanks"></ol>
+        </div>
+
+        <p class="report-note" id="reportNote"></p>
+      </section>
 
       <div class="results-actions">
         <button class="btn btn-ghost" type="button" id="shareBtn">Share your travel vibe</button>

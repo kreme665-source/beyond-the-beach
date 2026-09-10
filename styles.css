@@ -630,7 +630,65 @@ button { font: inherit; color: inherit; }
   .sound-toggle[aria-pressed="true"] .sound-wave i { animation: none; height: 9px; }
 }
 
-/* ------------------------------ 12. FOOTER ------------------------------ */
+/* ---------------------- 12. FULL VIBE REPORT ---------------------------- */
+.report {
+  scroll-margin-top: 96px;   /* clears the fixed header when it scrolls into view */
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  padding: clamp(30px, 5vw, 56px) clamp(22px, 4vw, 48px);
+  border: 1px solid var(--accent); background: var(--surface);
+}
+.report-lead {
+  max-width: 64ch; margin: 0 auto clamp(34px, 5vw, 52px);
+  text-align: center; color: var(--muted); font-size: 16.5px;
+}
+.report-block { margin-bottom: clamp(34px, 5vw, 52px); }
+.report-block:last-of-type { margin-bottom: clamp(20px, 3vw, 30px); }
+
+.report-dims { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.report-dims li {
+  display: grid; grid-template-columns: 96px 1fr; gap: 4px 14px; align-items: baseline;
+}
+.report-dims .rd-name {
+  font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--text);
+}
+.report-dims .rd-track { position: relative; height: 2px; background: var(--line); align-self: center; }
+.report-dims .rd-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
+.report-dims .rd-meaning {
+  grid-column: 2; color: var(--muted); font-size: 14px; line-height: 1.5;
+}
+.report-dims .rd-val {
+  grid-column: 1; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+
+.report-ranks { list-style: none; margin: 0; padding: 0; counter-reset: rank; }
+.report-ranks li {
+  display: grid; grid-template-columns: 34px 1fr auto; gap: 4px 14px;
+  padding: 16px 0; border-top: 1px solid var(--line-soft);
+}
+.report-ranks li:first-child { border-top: 0; }
+.report-ranks .rr-num {
+  font-family: var(--font-display); font-size: 17px; color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.report-ranks .rr-name { font-family: var(--font-display); font-size: 22px; line-height: 1.2; }
+.report-ranks .rr-country {
+  grid-column: 2; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--accent);
+}
+.report-ranks .rr-why { grid-column: 2; color: var(--muted); font-size: 14.5px; line-height: 1.55; margin-top: 4px; }
+.report-ranks .rr-score {
+  font-size: 12px; letter-spacing: .1em; color: var(--text); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.report-note {
+  margin: 0; text-align: center; color: var(--muted); font-size: 13.5px; line-height: 1.6;
+}
+@media (max-width: 560px) {
+  .report-dims li { grid-template-columns: 74px 1fr; }
+  .report-ranks li { grid-template-columns: 26px 1fr; }
+  .report-ranks .rr-score { grid-column: 2; margin-top: 6px; }
+}
+
+/* ------------------------------ 13. FOOTER ------------------------------ */
 .site-footer {
   padding: clamp(60px, 9vw, 100px) 0 clamp(40px, 6vw, 60px);
   border-top: 1px solid var(--line-soft);
@@ -650,7 +708,7 @@ button { font: inherit; color: inherit; }
 .footer-social a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .footer-legal { color: var(--muted); font-size: 12px; letter-spacing: .06em; margin: 0; }
 
-/* ------------------------------- 13. TOAST ------------------------------ */
+/* ------------------------------- 14. TOAST ------------------------------ */
 .toast {
   position: fixed; left: 50%; bottom: 84px; transform: translate(-50%, 20px);
   z-index: 200; background: var(--surface-2); color: var(--text);
@@ -661,7 +719,7 @@ button { font: inherit; color: inherit; }
 }
 .toast.is-on { opacity: 1; transform: translate(-50%, 0); }
 
-/* ------------------------------ 14. REVEAL ------------------------------ */
+/* ------------------------------ 15. REVEAL ------------------------------ */
 .reveal { opacity: 0; transform: translateY(22px); }
 .reveal.is-in {
   opacity: 1; transform: none;
@@ -672,7 +730,7 @@ button { font: inherit; color: inherit; }
 .reveal[data-delay="3"].is-in { transition-delay: .30s; }
 .reveal[data-delay="4"].is-in { transition-delay: .40s; }
 
-/* --------------------------- 15. BREAKPOINTS ---------------------------- */
+/* --------------------------- 16. BREAKPOINTS ---------------------------- */
 @media (min-width: 700px) {
   .quiz-options { grid-template-columns: 1fr 1fr; }
   .highlights { grid-template-columns: 1fr 1fr; }
@@ -688,7 +746,7 @@ button { font: inherit; color: inherit; }
   .card-name { font-size: 27px; }
 }
 
-/* --------------------------- 16. REDUCED MOTION ------------------------- */
+/* --------------------------- 17. REDUCED MOTION ------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
