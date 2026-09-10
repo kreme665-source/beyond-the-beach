@@ -90,7 +90,7 @@ const VIDEO = {
   src: '',
   poster: 'img/nevis.jpg',
   title: 'Caribbean roots, global routes',
-  blurb: 'Phil Charles — born on Nevis, trained at Four Seasons, then twenty years in the U.S. Army, now writing from Alaska — on why IslandIQ asks who you are instead of where you are going.'
+  blurb: 'Phil Charles — born on Nevis, trained in hospitality at Four Seasons Hotels and Resorts, then twenty years in the U.S. Army, now writing from Alaska — on why IslandIQ asks who you are instead of where you are going.'
 };
 
 /**
