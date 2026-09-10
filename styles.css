@@ -414,9 +414,9 @@ button { font: inherit; color: inherit; }
 
 .matches-head { margin-bottom: clamp(30px, 4vw, 46px); }
 
-.cards { display: grid; gap: clamp(20px, 3vw, 30px); grid-template-columns: 1fr; }
+.cards { display: grid; gap: clamp(20px, 3vw, 30px); grid-template-columns: 1fr; align-items: start; }
 .card {
-  position: relative; display: flex; flex-direction: column; text-align: left;
+  position: relative; display: flex; flex-direction: column; text-align: left; width: 100%;
   background: var(--surface); border: 1px solid var(--line-soft);
   border-radius: var(--radius); overflow: hidden; cursor: pointer; padding: 0;
   transition: transform .5s var(--ease), border-color .5s var(--ease), box-shadow .5s var(--ease);
@@ -688,7 +688,34 @@ button { font: inherit; color: inherit; }
   .report-ranks .rr-score { grid-column: 2; margin-top: 6px; }
 }
 
-/* ------------------------------ 13. FOOTER ------------------------------ */
+/* ------------------- 13. MATCH FEEDBACK (per card) ---------------------- */
+/* One verdict per destination. Persona + destination in a single event. */
+.card-slot { display: flex; flex-direction: column; gap: 12px; }
+
+.vote {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin: -6px 0 4px; padding: 0 2px;
+}
+.vote-q {
+  flex: 1 1 100%; margin-bottom: 2px;
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+  transition: color .3s var(--ease);
+}
+.vote-btn {
+  background: none; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 7px 14px; color: var(--muted);
+  font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+  transition: color .3s var(--ease), border-color .3s var(--ease), background-color .3s var(--ease);
+}
+.vote-btn:hover { color: var(--accent); border-color: var(--accent); }
+.vote.is-voted .vote-q { color: var(--accent); }
+.vote.is-voted .vote-btn { pointer-events: none; opacity: .35; }
+.vote.is-voted .vote-btn.is-picked {
+  opacity: 1; color: var(--accent); border-color: var(--accent); background: var(--accent-dim);
+}
+
+/* ------------------------------ 14. FOOTER ------------------------------ */
 .site-footer {
   padding: clamp(60px, 9vw, 100px) 0 clamp(40px, 6vw, 60px);
   border-top: 1px solid var(--line-soft);
@@ -708,7 +735,7 @@ button { font: inherit; color: inherit; }
 .footer-social a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .footer-legal { color: var(--muted); font-size: 12px; letter-spacing: .06em; margin: 0; }
 
-/* ------------------------------- 14. TOAST ------------------------------ */
+/* ------------------------------- 15. TOAST ------------------------------ */
 .toast {
   position: fixed; left: 50%; bottom: 84px; transform: translate(-50%, 20px);
   z-index: 200; background: var(--surface-2); color: var(--text);
@@ -719,7 +746,7 @@ button { font: inherit; color: inherit; }
 }
 .toast.is-on { opacity: 1; transform: translate(-50%, 0); }
 
-/* ------------------------------ 15. REVEAL ------------------------------ */
+/* ------------------------------ 16. REVEAL ------------------------------ */
 .reveal { opacity: 0; transform: translateY(22px); }
 .reveal.is-in {
   opacity: 1; transform: none;
@@ -730,7 +757,7 @@ button { font: inherit; color: inherit; }
 .reveal[data-delay="3"].is-in { transition-delay: .30s; }
 .reveal[data-delay="4"].is-in { transition-delay: .40s; }
 
-/* --------------------------- 16. BREAKPOINTS ---------------------------- */
+/* --------------------------- 17. BREAKPOINTS ---------------------------- */
 @media (min-width: 700px) {
   .quiz-options { grid-template-columns: 1fr 1fr; }
   .highlights { grid-template-columns: 1fr 1fr; }
@@ -746,7 +773,7 @@ button { font: inherit; color: inherit; }
   .card-name { font-size: 27px; }
 }
 
-/* --------------------------- 17. REDUCED MOTION ------------------------- */
+/* --------------------------- 18. REDUCED MOTION ------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
