@@ -837,7 +837,34 @@ function renderResults(result) {
        </span>`;
     card.querySelector('.card-media').style.backgroundImage = mediaBackground(m.dest.image, 'card');
     card.addEventListener('click', () => openDetail(m));
-    cards.appendChild(card);
+
+    const slot = document.createElement('div');
+    slot.className = 'card-slot';
+    slot.appendChild(card);
+
+    // Verdict control. The only place a traveller can tell us the match is wrong,
+    // and the only signal that carries persona and destination together.
+    const vote = document.createElement('div');
+    vote.className = 'vote';
+    vote.innerHTML =
+      `<span class="vote-q">Does this fit you?</span>` +
+      `<button class="vote-btn" type="button" data-v="yes">Would go</button>` +
+      `<button class="vote-btn" type="button" data-v="no">Not for me</button>`;
+    vote.addEventListener('click', (e) => {
+      const btn = e.target.closest('.vote-btn');
+      if (!btn || vote.classList.contains('is-voted')) return;
+      const verdict = btn.dataset.v;
+      vote.classList.add('is-voted');
+      btn.classList.add('is-picked');
+      vote.querySelector('.vote-q').textContent = verdict === 'yes' ? 'Noted — thank you.' : 'Noted. That helps more than a yes.';
+      track('match_feedback', {
+        verdict,
+        persona: result.persona.name,
+        destination: m.dest.name
+      });
+    });
+    slot.appendChild(vote);
+    cards.appendChild(slot);
   });
 }
 
