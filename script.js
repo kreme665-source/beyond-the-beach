@@ -64,7 +64,7 @@ const CARD_IMAGES = {
  * ANALYTICS — cookie-free, no consent banner, no Google.
  * Pick a provider and paste your site value; until then nothing loads and
  * no events are sent.
- *   Plausible   → provider: 'plausible',   site: 'kreme665-source.github.io'
+ *   Plausible   → provider: 'plausible',   site: 'beyondthebeachiq.com'
  *                 (the domain exactly as you entered it in Plausible)
  *   GoatCounter → provider: 'goatcounter', site: 'beyondthebeach'
  *                 (your code, i.e. the xxx in xxx.goatcounter.com)
@@ -1114,7 +1114,7 @@ function renderReport() {
    canvas stays untainted and can be exported. */
 
 const CARD_W = 1080;
-const SITE_LABEL = 'kreme665-source.github.io/beyond-the-beach';
+const SITE_LABEL = 'beyondthebeachiq.com';
 
 function loadImage(src) {
   return new Promise((resolve) => {
