@@ -842,21 +842,24 @@ function renderResults(result) {
     slot.className = 'card-slot';
     slot.appendChild(card);
 
-    // Verdict control. The only place a traveller can tell us the match is wrong,
-    // and the only signal that carries persona and destination together.
+    // Verdict control. Measures FIT (was the match accurate), not desire (would
+    // they book it) — desire is already visible in destination_opened. This is the
+    // only signal that carries persona and destination together.
     const vote = document.createElement('div');
     vote.className = 'vote';
     vote.innerHTML =
-      `<span class="vote-q">Does this fit you?</span>` +
-      `<button class="vote-btn" type="button" data-v="yes">Would go</button>` +
-      `<button class="vote-btn" type="button" data-v="no">Not for me</button>`;
+      `<span class="vote-q">Is this you?</span>` +
+      `<button class="vote-btn" type="button" data-v="yes">That&rsquo;s me</button>` +
+      `<button class="vote-btn" type="button" data-v="no">Not me</button>`;
     vote.addEventListener('click', (e) => {
       const btn = e.target.closest('.vote-btn');
       if (!btn || vote.classList.contains('is-voted')) return;
       const verdict = btn.dataset.v;
       vote.classList.add('is-voted');
       btn.classList.add('is-picked');
-      vote.querySelector('.vote-q').textContent = verdict === 'yes' ? 'Noted — thank you.' : 'Noted. That helps more than a yes.';
+      vote.querySelector('.vote-q').textContent = verdict === 'yes'
+        ? 'Noted — thank you.'
+        : 'Noted. A wrong match teaches more than a right one.';
       track('match_feedback', {
         verdict,
         persona: result.persona.name,
