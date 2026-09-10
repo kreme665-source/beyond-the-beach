@@ -705,6 +705,7 @@ function initHeader() {
 /* --- quiz --- */
 function openQuiz() {
   track('quiz_started');
+  $('#shareCardBlock').hidden = true;
   state.answers = [];
   state.q = 0;
   state.lastFocus = document.activeElement;
@@ -785,6 +786,7 @@ function finishQuiz() {
 
   const section = $('#results');
   section.hidden = false;
+  initShareCard();
   requestAnimationFrame(() => {
     section.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
     // Animate the vibe bars once they are on screen.
@@ -1106,6 +1108,176 @@ function renderReport() {
   });
 }
 
+/* ------------------ SHAREABLE RESULT CARD (canvas) ---------------------- */
+/* A 1080x1080 image the traveller can post. Drawn client-side from their own
+   result, over the top match's photograph. Same-origin images only, so the
+   canvas stays untainted and can be exported. */
+
+const CARD_W = 1080;
+const SITE_LABEL = 'kreme665-source.github.io/beyond-the-beach';
+
+function loadImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+/** Draw the source image to cover the canvas, centred. */
+function drawCover(ctx, img, w, h) {
+  const scale = Math.max(w / img.width, h / img.height);
+  const dw = img.width * scale, dh = img.height * scale;
+  ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+}
+
+async function buildShareCard() {
+  if (!state.result) return null;
+  const { persona, matches } = state.result;
+
+  const c = document.createElement('canvas');
+  c.width = CARD_W; c.height = CARD_W;
+  const x = c.getContext('2d');
+
+  // ground
+  x.fillStyle = '#1a1815';
+  x.fillRect(0, 0, CARD_W, CARD_W);
+
+  // photograph of the top match, if there is one
+  const top = matches[0];
+  const src = IMAGES[top.dest.image];
+  if (src) {
+    const img = await loadImage(src);
+    if (img) drawCover(x, img, CARD_W, CARD_W);
+  }
+
+  // scrim so type always reads
+  const g = x.createLinearGradient(0, 0, 0, CARD_W);
+  g.addColorStop(0, 'rgba(10,9,8,0.72)');
+  g.addColorStop(0.34, 'rgba(10,9,8,0.42)');
+  g.addColorStop(0.62, 'rgba(10,9,8,0.80)');
+  g.addColorStop(1, 'rgba(10,9,8,0.95)');
+  x.fillStyle = g;
+  x.fillRect(0, 0, CARD_W, CARD_W);
+
+  const PAD = 78;
+  const cream = '#f2ede3', teal = '#4fd3cc', muted = '#b4aa9a';
+
+  // masthead
+  x.textBaseline = 'alphabetic';
+  x.fillStyle = cream;
+  x.font = '500 25px Jost, sans-serif';
+  x.letterSpacing = '7px';
+  x.fillText('BEYOND THE BEACH', PAD, PAD + 26);
+  x.fillStyle = teal;
+  x.font = '400 25px "Cormorant Garamond", serif';
+  x.letterSpacing = '6px';
+  const iq = 'ISLANDIQ';
+  x.fillText(iq, CARD_W - PAD - x.measureText(iq).width, PAD + 26);
+  x.letterSpacing = '0px';
+
+  // persona block
+  let y = 500;
+  x.fillStyle = teal;
+  x.font = '500 24px Jost, sans-serif';
+  x.letterSpacing = '8px';
+  x.fillText('MY TRAVEL VIBE', PAD, y);
+  x.letterSpacing = '0px';
+
+  y += 96;
+  x.fillStyle = cream;
+  x.font = '300 92px "Cormorant Garamond", serif';
+  x.fillText(persona.name, PAD, y);
+
+  // divider
+  y += 46;
+  x.strokeStyle = teal; x.lineWidth = 1;
+  x.beginPath(); x.moveTo(PAD, y); x.lineTo(PAD + 96, y); x.stroke();
+  x.beginPath(); x.arc(PAD + 112, y, 3.5, 0, Math.PI * 2); x.fillStyle = teal; x.fill();
+
+  // top three matches
+  y += 62;
+  matches.slice(0, 3).forEach((m) => {
+    x.fillStyle = cream;
+    x.font = '400 42px "Cormorant Garamond", serif';
+    x.fillText(m.dest.name, PAD, y);
+
+    const pct = m.score + '%';
+    x.fillStyle = teal;
+    x.font = '500 28px Jost, sans-serif';
+    x.fillText(pct, CARD_W - PAD - x.measureText(pct).width, y);
+
+    y += 22;
+    x.strokeStyle = 'rgba(242,237,227,0.16)';
+    x.beginPath(); x.moveTo(PAD, y); x.lineTo(CARD_W - PAD, y); x.stroke();
+    y += 58;
+  });
+
+  // footer
+  x.fillStyle = muted;
+  x.font = '400 23px Jost, sans-serif';
+  x.letterSpacing = '2px';
+  x.fillText('Find your travel vibe \u2014 ' + SITE_LABEL, PAD, CARD_W - PAD);
+  x.letterSpacing = '0px';
+
+  return new Promise((resolve) => c.toBlob(resolve, 'image/png', 0.92));
+}
+
+/** Render the preview and wire the two buttons. Called once a result exists. */
+async function initShareCard() {
+  if (!state.result) return;
+  try {
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    const blob = await buildShareCard();
+    if (!blob) return;
+    state.cardBlob = blob;
+    $('#shareCardImg').src = URL.createObjectURL(blob);
+    $('#shareCardBlock').hidden = false;
+  } catch (e) {
+    // the card is a bonus; never let it break the results screen
+  }
+}
+
+function cardFileName() {
+  const p = state.result ? state.result.persona.name.toLowerCase().replace(/[^a-z]+/g, '-') : 'vibe';
+  return `islandiq-${p}.png`;
+}
+
+function initShareCardButtons() {
+  $('#shareImgBtn').addEventListener('click', async () => {
+    if (!state.cardBlob) return;
+    const persona = state.result.persona.name;
+    const file = new File([state.cardBlob], cardFileName(), { type: 'image/png' });
+    const text = `I\u2019m a ${persona} on IslandIQ \u2014 what\u2019s your travel vibe?`;
+    track('share_card', { persona });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], text, title: 'IslandIQ' });
+        return;
+      } catch (e) { /* cancelled */ }
+    }
+    saveCard();
+    toast('Saved \u2014 post it and tag the brand.');
+  });
+
+  $('#saveImgBtn').addEventListener('click', () => {
+    saveCard();
+    track('save_card', { persona: state.result ? state.result.persona.name : 'unknown' });
+  });
+}
+
+function saveCard() {
+  if (!state.cardBlob) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(state.cardBlob);
+  a.download = cardFileName();
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
 /* ------------------- 6. LEAD CAPTURE + SHARE ---------------------------- */
 
 function readSignups() {
@@ -1260,6 +1432,7 @@ function init() {
   initCapture();
   initShare();
 
+  initShareCardButtons();
   $$('[data-action="start-quiz"]').forEach((b) => b.addEventListener('click', openQuiz));
   $('#quizBack').addEventListener('click', quizBack);
   $('#quizClose').addEventListener('click', closeQuiz);

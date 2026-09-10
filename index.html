@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="styles.css?v=4">
 <script>
   // Theme: system preference by default, user choice persisted. Set before paint to avoid flash.
   (function () {
@@ -180,8 +180,17 @@
         <p class="report-note" id="reportNote"></p>
       </section>
 
+      <div class="share-card" id="shareCardBlock" hidden>
+        <p class="eyebrow center">Share your vibe</p>
+        <img class="share-card-img" id="shareCardImg" alt="Your travel vibe card: persona and top destination matches">
+        <div class="share-card-actions">
+          <button class="btn btn-primary" type="button" id="shareImgBtn">Share this card</button>
+          <button class="btn btn-ghost" type="button" id="saveImgBtn">Save image</button>
+        </div>
+      </div>
+
       <div class="results-actions">
-        <button class="btn btn-ghost" type="button" id="shareBtn">Share your travel vibe</button>
+        <button class="btn btn-ghost" type="button" id="shareBtn">Share as a link</button>
         <button class="btn btn-ghost" type="button" data-action="start-quiz">Retake the quiz</button>
       </div>
     </div>
@@ -277,6 +286,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="script.js?v=3"></script>
+<script src="script.js?v=4"></script>
 </body>
 </html>

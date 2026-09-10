@@ -715,7 +715,19 @@ button { font: inherit; color: inherit; }
   opacity: 1; color: var(--accent); border-color: var(--accent); background: var(--accent-dim);
 }
 
-/* ------------------------------ 14. FOOTER ------------------------------ */
+/* ------------------ 14. SHAREABLE RESULT CARD --------------------------- */
+.share-card {
+  margin: clamp(34px, 5vw, 56px) auto 0; max-width: 520px; text-align: center;
+}
+.share-card .eyebrow { text-align: center; }
+.share-card-img {
+  width: 100%; height: auto; display: block; margin: 0 auto 20px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.share-card-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+/* ------------------------------ 15. FOOTER ------------------------------ */
 .site-footer {
   padding: clamp(60px, 9vw, 100px) 0 clamp(40px, 6vw, 60px);
   border-top: 1px solid var(--line-soft);
@@ -735,7 +747,7 @@ button { font: inherit; color: inherit; }
 .footer-social a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .footer-legal { color: var(--muted); font-size: 12px; letter-spacing: .06em; margin: 0; }
 
-/* ------------------------------- 15. TOAST ------------------------------ */
+/* ------------------------------- 16. TOAST ------------------------------ */
 .toast {
   position: fixed; left: 50%; bottom: 84px; transform: translate(-50%, 20px);
   z-index: 200; background: var(--surface-2); color: var(--text);
@@ -746,7 +758,7 @@ button { font: inherit; color: inherit; }
 }
 .toast.is-on { opacity: 1; transform: translate(-50%, 0); }
 
-/* ------------------------------ 16. REVEAL ------------------------------ */
+/* ------------------------------ 17. REVEAL ------------------------------ */
 .reveal { opacity: 0; transform: translateY(22px); }
 .reveal.is-in {
   opacity: 1; transform: none;
@@ -757,7 +769,7 @@ button { font: inherit; color: inherit; }
 .reveal[data-delay="3"].is-in { transition-delay: .30s; }
 .reveal[data-delay="4"].is-in { transition-delay: .40s; }
 
-/* --------------------------- 17. BREAKPOINTS ---------------------------- */
+/* --------------------------- 18. BREAKPOINTS ---------------------------- */
 @media (min-width: 700px) {
   .quiz-options { grid-template-columns: 1fr 1fr; }
   .highlights { grid-template-columns: 1fr 1fr; }
@@ -773,7 +785,7 @@ button { font: inherit; color: inherit; }
   .card-name { font-size: 27px; }
 }
 
-/* --------------------------- 18. REDUCED MOTION ------------------------- */
+/* --------------------------- 19. REDUCED MOTION ------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
