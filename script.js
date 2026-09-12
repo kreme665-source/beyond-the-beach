@@ -353,12 +353,12 @@ const QUESTIONS = [
   {
     id: 'pull', text: 'What pulls you to a place first?',
     options: [
-      { label: 'The food', w: { food: 3, culture: 1 } },
-      { label: 'Music and nightlife', w: { nightlife: 3, social: 2 } },
-      { label: 'Culture and history', w: { culture: 3, iconic: 1 } },
-      { label: 'Nature and calm', w: { nature: 3, calm: 2 } },
-      { label: 'Adventure', w: { adventure: 3, nature: 1 } },
-      { label: 'The iconic sights', w: { iconic: 3, culture: 1 } }
+      { label: 'Standing in line for something you can\'t pronounce', w: { food: 3, culture: 1 } },
+      { label: 'A room where the music is too loud to talk', w: { nightlife: 3, social: 2 } },
+      { label: 'A building older than your country', w: { culture: 3, iconic: 1 } },
+      { label: 'Somewhere your phone gives up', w: { nature: 3, calm: 2 } },
+      { label: 'A trail that starts where the road ends', w: { adventure: 3, nature: 1 } },
+      { label: 'The thing you\'ve seen a thousand photos of', w: { iconic: 3, culture: 1 } }
     ]
   },
   {
