@@ -1398,7 +1398,7 @@ function initCapture() {
 
     form.hidden = true;
     msg.textContent = ok
-      ? 'You are on the list. You will hear from me when destination seven lands.'
+      ? 'You are on the list. You will hear from me when the next destination lands.'
       : 'Saved — we could not reach the server just now, so it will send itself next time you visit. You are on the list either way.';
     btn.disabled = false;
     btn.textContent = 'Send it';
