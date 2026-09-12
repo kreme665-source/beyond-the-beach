@@ -703,11 +703,34 @@ function initHeader() {
 }
 
 /* --- quiz --- */
+
+/**
+ * Per-run display order for each question's options.
+ *
+ * Fixed option order creates two problems: people disproportionately pick the
+ * first thing they read (position bias, which skews the aggregate data), and a
+ * constant order lets a repeat visitor learn which slot maps to which dimension.
+ * Shuffled ONCE when the quiz opens — not per render — so the back button shows
+ * the same screen the visitor already saw. Weights travel with the option object,
+ * so shuffling changes presentation only, never the result.
+ */
+function buildOptionOrder() {
+  return QUESTIONS.map((q) => {
+    const order = q.options.map((_, i) => i);
+    for (let i = order.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    return order;
+  });
+}
+
 function openQuiz() {
   track('quiz_started');
   $('#shareCardBlock').hidden = true;
   state.answers = [];
   state.q = 0;
+  state.order = buildOptionOrder();
   state.lastFocus = document.activeElement;
   const quiz = $('#quiz');
   quiz.hidden = false;
@@ -730,14 +753,16 @@ function renderQuestion(immediate) {
 
     const wrap = $('#qOptions');
     wrap.innerHTML = '';
-    q.options.forEach((opt, i) => {
+    const order = (state.order && state.order[state.q]) || q.options.map((_, i) => i);
+    order.forEach((optIndex) => {
+      const opt = q.options[optIndex];
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'opt';
       b.textContent = opt.label;
       const chosen = state.answers[state.q];
-      if (chosen && chosen.oIndex === i) b.classList.add('is-picked');
-      b.addEventListener('click', () => answer(i));
+      if (chosen && chosen.oIndex === optIndex) b.classList.add('is-picked');
+      b.addEventListener('click', () => answer(optIndex));
       wrap.appendChild(b);
     });
 
