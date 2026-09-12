@@ -366,7 +366,7 @@ const QUESTIONS = [
     options: [
       { label: 'A local food spot nobody wrote about', w: { food: 2, social: 1, culture: 1 } },
       { label: 'Dancing, live music, late', w: { nightlife: 3, social: 2 } },
-      { label: 'A quiet view and nothing else', w: { calm: 3, romance: 1 } },
+      { label: 'A quiet view and nothing else', w: { calm: 3, romance: 2, luxury: 1 } },
       { label: 'Meeting locals, wherever that leads', w: { social: 3, culture: 1 } },
       { label: 'Still out exploring', w: { adventure: 2, iconic: 1, nature: 1 } }
     ]
@@ -374,26 +374,26 @@ const QUESTIONS = [
   {
     id: 'pace', text: 'What pace do you want?',
     options: [
-      { label: 'Slow and restful', w: { calm: 3, luxury: 1, romance: 1 } },
+      { label: 'Slow and restful', w: { calm: 3, luxury: 2, romance: 2 } },
       { label: 'Balanced — some plans, some drift', w: { calm: 1, culture: 1, food: 1 } },
-      { label: 'Packed and active', w: { adventure: 3, iconic: 1 } }
+      { label: 'Packed and active', w: { adventure: 2, iconic: 2 } }
     ]
   },
   {
     id: 'who', text: 'Who is travelling?',
     options: [
       { label: 'Just me', w: { social: 2, adventure: 1 } },
-      { label: 'Me and my person', w: { romance: 3, calm: 1 } },
-      { label: 'The family', w: { nature: 1, iconic: 1, calm: 1 } },
+      { label: 'Me and my person', w: { romance: 4, calm: 1, luxury: 1 } },
+      { label: 'The family', w: { nature: 2, iconic: 2, calm: 1 } },
       { label: 'A group of friends', w: { social: 2, nightlife: 2 } }
     ]
   },
   {
     id: 'comfort', text: 'Where do you want to sleep?',
     options: [
-      { label: 'Rustic and authentic', w: { culture: 2, adventure: 1, food: 1 } },
-      { label: 'Boutique and stylish', w: { luxury: 2, romance: 1, food: 1 } },
-      { label: 'Full luxury, handled', w: { luxury: 3, calm: 1, romance: 1 } }
+      { label: 'Rustic and authentic', w: { culture: 3, food: 1, nature: 1 } },
+      { label: 'Boutique and stylish', w: { luxury: 3, romance: 2, food: 1 } },
+      { label: 'Full luxury, handled', w: { luxury: 4, calm: 2, romance: 2 } }
     ]
   },
   {
@@ -402,23 +402,23 @@ const QUESTIONS = [
       { label: 'A meal', w: { food: 3 } },
       { label: 'A night out', w: { nightlife: 3, social: 1 } },
       { label: 'A person you met', w: { social: 3, culture: 1 } },
-      { label: 'A view', w: { nature: 2, iconic: 2, calm: 1 } },
+      { label: 'A view', w: { nature: 3, iconic: 2, calm: 1 } },
       { label: 'A challenge you conquered', w: { adventure: 3 } }
     ]
   },
   {
     id: 'style', text: 'Are you more…',
     options: [
-      { label: 'A planner', w: { iconic: 1, luxury: 1, culture: 1 } },
+      { label: 'A planner', w: { iconic: 2, luxury: 2, culture: 1 } },
       { label: 'Spontaneous', w: { social: 2, adventure: 1 } }
     ]
   },
   {
     id: 'climate', text: 'What climate are you craving?',
     options: [
-      { label: 'Tropical warm', w: { calm: 1, romance: 1, nature: 1 } },
-      { label: 'Cool and wild', w: { nature: 2, adventure: 2 } },
-      { label: 'Mediterranean mild', w: { culture: 2, food: 2, romance: 1 } },
+      { label: 'Tropical warm', w: { calm: 1, romance: 2, nature: 1 } },
+      { label: 'Cool and wild', w: { nature: 3, adventure: 1 } },
+      { label: 'Mediterranean mild', w: { culture: 2, food: 2, romance: 2, luxury: 1 } },
       { label: 'Doesn\'t matter', w: {} }
     ]
   }
@@ -436,7 +436,7 @@ const PERSONAS = [
   },
   {
     id: 'island-hopper', name: 'Island Hopper',
-    test: (top, v) => (top[0] === 'nature' || top[0] === 'social') && v.nature >= 4 && v.social >= 4,
+    test: (top, v) => (top[0] === 'nature' || top[0] === 'social') && v.nature >= 3 && v.social >= 3,
     desc: 'You want the landscape and the people, and you refuse to choose. Water in the morning, strangers who become friends by evening — you travel wide and you travel warm.'
   },
   {
@@ -461,7 +461,7 @@ const PERSONAS = [
   },
   {
     id: 'luxe-localist', name: 'Luxe Localist',
-    test: (top, v) => top[0] === 'luxury' || (v.luxury >= 3.6 && (v.food >= 3.4 || v.culture >= 3.4 || v.romance >= 3.4)),
+    test: (top, v) => top[0] === 'luxury' || (v.luxury >= 4.2 && (v.food >= 3.6 || v.culture >= 3.6 || v.romance >= 3.6)),
     desc: 'You want comfort and the real place, and you have learned they are not opposites. Twelve rooms, not four hundred; the excellent local restaurant, not the hotel one.'
   },
   {
