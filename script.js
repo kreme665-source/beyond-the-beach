@@ -294,7 +294,7 @@ const DESTINATIONS = [
     intro: 'A capital city with no road in or out. Juneau sits on a strip of rock between a glacier and a channel, and the scale of it never stops surprising you — humpbacks in the morning, a blue ice face in the afternoon, rain on the tin roofs all night.',
     highlights: [
       { kicker: 'Nature', title: 'Mendenhall Glacier', body: 'Thirteen miles of ice ending in a lake, with an ice cave beneath it that changes shape every season. Kayak in and the silence is total.' },
-      { kicker: 'Adventure', title: 'The Mount Roberts ridge', body: 'Tram up, then keep walking until the town is a model below and the alpine opens out toward Canada.' },
+      { kicker: 'Food', title: 'Amalga Distillery', body: 'Named a James Beard semifinalist for Outstanding Bar in 2024. The copper still stands in the room where you drink it, the gin is named after the town, and the gin and tonic is five dollars.' },
       { kicker: 'Wildlife', title: 'Whales at Point Adolphus', body: 'Humpbacks bubble-net feeding within a boat length. Not a scheduled show — just a summer routine you get to witness.' },
       { kicker: 'Culture', title: 'Tlingit Juneau', body: 'The Sealaska Heritage totem walk and carvers working in the open. The oldest story here is not the gold rush.' }
     ]
